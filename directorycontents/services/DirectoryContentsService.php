@@ -33,6 +33,15 @@ class DirectoryContentsService extends BaseApplicationComponent
 					throw new Exception(Craft::t('A path must be specified'));
 				}
 
+				if (array_key_exists('root', $options)) {
+					if ($options['root'] && strtolower($options['root']) !== 'webroot') {
+						$rootName = ucfirst(strtolower($options['root']));
+						$functionName = 'get'.$rootName.'Path';
+						$rootPath = craft()->path->$functionName();
+						$this->path = $rootPath.$this->path;
+					}
+				}
+
 				if (array_key_exists('ignoreFiles', $options)) {
 					$this->ignoreFiles = $options['ignoreFiles'];
 				}
