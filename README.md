@@ -16,6 +16,8 @@ Very early release.
 3. Install
 4. Go Go Go
 
+## Usage
+
 ```
 // Template Tag
 {% set files = craft.directoryContents.read("path/to/directory") %} // return array
