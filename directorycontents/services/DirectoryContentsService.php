@@ -4,6 +4,7 @@ namespace Craft;
 class DirectoryContentsService extends BaseApplicationComponent
 {
 	private $ignoreFiles = array('.DS_Store');
+	private $depth;
 	private $path;
 
 	public function read($options = false)
@@ -33,6 +34,23 @@ class DirectoryContentsService extends BaseApplicationComponent
 					throw new Exception(Craft::t('A path must be specified'));
 				}
 
+				if (array_key_exists('root', $options)) {
+					if ($options['root'] && strtolower($options['root']) !== 'webroot') {
+						$rootName = ucfirst(strtolower($options['root']));
+						$functionName = 'get'.$rootName.'Path';
+						$rootPath = craft()->path->$functionName();
+						$this->path = $rootPath.$this->path;
+					}
+				}
+
+				if (array_key_exists('depth', $options)) {
+					$this->depth = (int) $options['depth'];
+				}
+				else
+				{
+					$this->depth = -1;
+				}
+
 				if (array_key_exists('ignoreFiles', $options)) {
 					$this->ignoreFiles = $options['ignoreFiles'];
 				}
@@ -46,6 +64,9 @@ class DirectoryContentsService extends BaseApplicationComponent
 	{
 		$files = array();
 		$iterator = new \RecursiveIteratorIterator($directory);
+
+		$iterator->setMaxDepth($this->depth);
+
 		foreach ($iterator as $info) {
 
 			if (!in_array($info->getFilename(), $this->ignoreFiles)) {
