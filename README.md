@@ -10,6 +10,12 @@ By Default `ignoreFiles` only ignores `.DS_Store`
 
 Very early release.
 
+## Installation
+1. Download Zip
+2. Drop `directorycontents` in your plugins folder
+3. Install
+4. Go Go Go
+
 ```
 // Template Tag
 {% set files = craft.directoryContents.read("path/to/directory") %} // return array
@@ -23,5 +29,5 @@ Very early release.
 
 ```
 
-## TODO
+### TODO
 - ADD ALL THE OPTIONS (e.g. depth, file type etc)
