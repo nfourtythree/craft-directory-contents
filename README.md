@@ -19,7 +19,7 @@ Very early release.
     path: "path/to/dir",
     ignoreFiles: [".DS_Store", ".gitignore", "example.txt"]
 } %}
-{% set files = craft.directoryContents.read("path/to/directory") %}
+{% set files = craft.directoryContents.read(options) %}
 
 ```
 
