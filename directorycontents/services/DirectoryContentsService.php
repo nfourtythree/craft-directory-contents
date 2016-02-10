@@ -4,6 +4,7 @@ namespace Craft;
 class DirectoryContentsService extends BaseApplicationComponent
 {
 	private $ignoreFiles = array('.DS_Store');
+	private $depth;
 	private $path;
 
 	public function read($options = false)
@@ -42,6 +43,14 @@ class DirectoryContentsService extends BaseApplicationComponent
 					}
 				}
 
+				if (array_key_exists('depth', $options)) {
+					$this->depth = (int) $options['depth'];
+				}
+				else
+				{
+					$this->depth = -1;
+				}
+
 				if (array_key_exists('ignoreFiles', $options)) {
 					$this->ignoreFiles = $options['ignoreFiles'];
 				}
@@ -55,6 +64,9 @@ class DirectoryContentsService extends BaseApplicationComponent
 	{
 		$files = array();
 		$iterator = new \RecursiveIteratorIterator($directory);
+
+		$iterator->setMaxDepth($this->depth);
+
 		foreach ($iterator as $info) {
 
 			if (!in_array($info->getFilename(), $this->ignoreFiles)) {
