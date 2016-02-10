@@ -79,18 +79,20 @@ class DirectoryContentsService extends BaseApplicationComponent
 				}
 
 				$name = substr($info->getFilename(), 0, $fileNameLength - $extLength - 1);
-				$files[] = array(
-					"name" => $name,
-					"niceName" => ucwords(str_replace("-", " ", $name)),
-					"fileName" => $info->getFileName(),
-					"path" => $info->getPathname(),
-					"parentFolder" => $parentFolder,
-					"niceParentFolder" => ($parentFolder) ? ucwords(str_replace("-", " ", $parentFolder)) : $parentFolder,
-					"extension" => $info->getExtension(),
-					"size" => $info->getSize(),
-					"created" => $info->getCtime(),
-					"modified" => $info->getMtime(),
-				);
+
+				$file = new DirectoryContents_FileModel();
+				$file->name = $name;
+				$file->niceName = ucwords(str_replace("-", " ", $name));
+				$file->fileName = $info->getFileName();
+				$file->path = $info->getPathname();
+				$file->parentFolder = $parentFolder;
+				$file->niceParentFolder = ($parentFolder) ? ucwords(str_replace("-", " ", $parentFolder)) : $parentFolder;
+				$file->extension = $info->getExtension();
+				$file->size = $info->getSize();
+				$file->created = $info->getCtime();
+				$file->modified = $info->getMtime();
+
+				$files[] = $file;
 			}
 		}
 
