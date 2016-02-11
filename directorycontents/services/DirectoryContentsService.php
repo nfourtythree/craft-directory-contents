@@ -82,11 +82,11 @@ class DirectoryContentsService extends BaseApplicationComponent
 
 				$file = new DirectoryContents_FileModel();
 				$file->name = $name;
-				$file->niceName = ucwords(str_replace("-", " ", $name));
+				$file->niceName = $this->_generateNiceName($name);
 				$file->fileName = $info->getFileName();
 				$file->path = $info->getPathname();
 				$file->parentFolder = $parentFolder;
-				$file->niceParentFolder = ($parentFolder) ? ucwords(str_replace("-", " ", $parentFolder)) : $parentFolder;
+				$file->niceParentFolder = ($parentFolder) ? $this->_generateNiceName($parentFolder) : $parentFolder;
 				$file->extension = $info->getExtension();
 				$file->size = $info->getSize();
 				$file->created = $info->getCtime();
@@ -97,5 +97,15 @@ class DirectoryContentsService extends BaseApplicationComponent
 		}
 
 		return $files;
+	}
+
+	private function _generateNiceName($name = '')
+	{
+		$_replaceChars = array('-', '_');
+
+		$name = str_replace($_replaceChars, " ", $name);
+		$name = ucwords($name);
+
+		return $name;
 	}
 }
