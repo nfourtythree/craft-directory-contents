@@ -16,7 +16,7 @@ class DirectoryContentsService extends BaseApplicationComponent
 		} else {
 			$directory = new \RecursiveDirectoryIterator($this->path, \RecursiveDirectoryIterator::SKIP_DOTS);
 
-			$files = $this->loopFiles($directory);
+			$files = $this->_loopFiles($directory);
 
 			return $files;
 		}
@@ -60,7 +60,7 @@ class DirectoryContentsService extends BaseApplicationComponent
 		}
 	}
 
-	private function loopFiles($directory)
+	private function _loopFiles($directory)
 	{
 		$files = array();
 		$iterator = new \RecursiveIteratorIterator($directory);
